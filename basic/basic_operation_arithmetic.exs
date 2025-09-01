@@ -1,4 +1,3 @@
-
 IO.puts(2+2)
 IO.puts(2-1)
 IO.puts(2*5)
