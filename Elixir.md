@@ -1,4 +1,5 @@
-Introdução ao Elixir: Conceitos Básicos
+# Introdução ao Elixir: Conceitos Básicos
+
 Este documento apresenta os conceitos fundamentais da linguagem de programação Elixir, uma linguagem funcional, dinâmica e voltada para sistemas concorrentes, escaláveis e tolerantes a falhas, executada na máquina virtual BEAM (do Erlang). Vamos cobrir a instalação, o modo interativo (IEx), tipos de dados básicos e operações básicas.
 Instalação do Elixir
 
@@ -9,8 +10,10 @@ Após a instalação, você pode verificar a versão instalada do Elixir e do Er
 elixir -v
 
 Exemplo de saída:
+```
 Erlang/OTP 27 [erts-15.0.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 Elixir 1.17.2
+```
 
 
 > [!TIP]
@@ -23,17 +26,11 @@ Elixir possui uma ferramenta interativa chamada IEx (Interactive Elixir), que pe
 > Para iniciar o IEx, digite iex no terminal. No Windows PowerShell, use iex.bat.
 
 Ao abrir o IEx, você verá algo como:
+
+```
 Interactive Elixir (1.17.2) - press Ctrl+C to exit (type h() ENTER for help)
 iex>
-
-Experimentando no IEx
-Você pode testar expressões simples no IEx, como operações matemáticas ou funções de strings:
-iex> 2 + 3
-5
-iex> 2 + 3 == 5
-true
-iex> String.length("The quick brown fox jumps over the lazy dog")
-43
+```
 
 
 > [!TIP] 
@@ -54,113 +51,142 @@ iex> 0x1F    # Hexadecimal
 31
 ```
 
-[!NOTE]Use os prefixos 0b (binário), 0o (octal) e 0x (hexadecimal) para representar números em bases diferentes.
+> [!NOTE]
+> Use os prefixos 0b (binário), 0o (octal) e 0x (hexadecimal) para representar números em bases diferentes.
 
 Números de Ponto Flutuante (Floats)
 Números de ponto flutuante em Elixir têm precisão dupla de 64 bits e requerem pelo menos um dígito antes do ponto decimal. Eles também suportam notação científica com e:
+
+```
 iex> 3.14
 3.14
 iex> 1.0e-10
 1.0e-10
+```
 
-
-[!IMPORTANT]Um número como .14 (sem dígito antes do ponto) causará um erro de sintaxe: ** (SyntaxError) syntax error before: '.'.
+> [!IMPORTANT]
+> Um número como .14 (sem dígito antes do ponto) causará um erro de sintaxe: ** (SyntaxError) syntax error before: '.'.
 
 Booleanos
 Elixir suporta os valores booleanos true e false. Além disso, tudo em Elixir é considerado "verdadeiro" (truthy), exceto false e nil:
+
+```
 iex> true
 true
 iex> false
 false
 iex> is_boolean(:true)
 true
+```
 
-
-[!NOTE]Os valores booleanos true e false são, na verdade, átomos :true e :false. Isso significa que is_atom(true) retorna true.
+> [!NOTE]
+> Os valores booleanos true e false são, na verdade, átomos :true e :false. Isso significa que is_atom(true) retorna true.
 
 Átomos
 Um átomo é uma constante cujo nome é seu próprio valor, semelhante aos Symbols do Ruby. Eles são amplamente usados para representar estados, chaves em mapas e nomes de módulos:
+
+```
 iex> :foo
 :foo
 iex> :foo == :bar
 false
 iex> is_atom(MyApp.MyModule)
 true
+```
 
-
-[!TIP]Átomos são usados em bibliotecas Erlang, como :crypto.strong_rand_bytes(3), e para nomes de módulos, como MyApp.MyModule, mesmo que o módulo ainda não exista.
+> [!TIP]
+> Átomos são usados em bibliotecas Erlang, como :crypto.strong_rand_bytes(3), e para nomes de módulos, como MyApp.MyModule, mesmo que o módulo ainda não exista.
 
 Strings
 Strings em Elixir são codificadas em UTF-8 e delimitadas por aspas duplas. Elas suportam quebras de linha e sequências de escape:
+
+```
 iex> "Olá, mundo!"
 "Olá, mundo!"
 iex> "foo\nbar"
 "foo\nbar"
+```
 
-
-[!IMPORTANT]Strings em Elixir são UTF-8, o que permite trabalhar facilmente com caracteres de diferentes idiomas, como "dziękuję" (obrigado em polonês).
+> [!IMPORTANT]
+> Strings em Elixir são UTF-8, o que permite trabalhar facilmente com caracteres de diferentes idiomas, como "dziękuję" (obrigado em polonês).
 
 Operações Básicas
 Elixir oferece operações aritméticas, booleanas, de comparação, interpolação de strings e concatenação.
 Aritmética
 Os operadores básicos são +, -, * e /. A divisão (/) sempre retorna um número de ponto flutuante:
+
+```
 iex> 2 + 2
 4
 iex> 10 / 5
 2.0
+```
 
 Para divisão inteira ou resto da divisão, use as funções div/2 e rem/2:
+
+```
 iex> div(10, 3)
 3
 iex> rem(10, 3)
 1
+```
 
-
-[!TIP]Use div/2 e rem/2 quando precisar de resultados inteiros ou do resto de uma divisão, como em cálculos de modularidade.
+> [!TIP] 
+> Use div/2 e rem/2 quando precisar de resultados inteiros ou do resto de uma divisão, como em cálculos de modularidade.
 
 Operações Booleanas
 Elixir suporta os operadores ||, && e !, que funcionam com qualquer tipo de dado, já que apenas false e nil são considerados falsos:
+
+```
 iex> -20 || true
 -20
 iex> false || 42
 42
 iex> !false
 true
+```
 
 Além disso, os operadores and, or e not exigem que o primeiro argumento seja um booleano:
+
+```
 iex> true and 42
 42
 iex> not 42
 ** (ArgumentError) argument error
+```
 
-
-[!NOTE]Os operadores and e or em Elixir são equivalentes a andalso e orelse no Erlang, garantindo curto-circuito estrito.
+> [!NOTE]
+> Os operadores and e or em Elixir são equivalentes a andalso e orelse no Erlang, garantindo curto-circuito estrito.
 
 Comparações
 Elixir suporta os operadores de comparação padrão: ==, !=, ===, !==, <=, >=, < e >:
+
+```
 iex> 1 > 2
 false
 iex> 2 == 2.0
 true
 iex> 2 === 2.0
 false
+```
 
-
-[!IMPORTANT]Use === para comparações estritas entre inteiros e floats. Elixir também permite comparar diferentes tipos, seguindo a ordem: número < átomo < referência < função < porto < pid < tupla < mapa < lista < bitstring.
+> [!IMPORTANT]
+> Use === para comparações estritas entre inteiros e floats. Elixir também permite comparar diferentes tipos, seguindo a ordem: número < átomo < referência < função < porto < pid < tupla < mapa < lista < bitstring.
 
 Interpolação e Concatenação de Strings
 A interpolação de strings usa #{} para inserir valores, e a concatenação usa o operador <>:
+
+```
 iex> nome = "João"
 "João"
 iex> "Olá, #{nome}!"
 "Olá, João!"
 iex> "Olá, " <> nome
 "Olá, João!"
+```
 
+> [!TIP]
+> A interpolação (#{}) é ideal para construir strings dinâmicas de forma legível, enquanto <> é útil para combinar strings diretamente.
 
-[!TIP]A interpolação (#{}) é ideal para construir strings dinâmicas de forma legível, enquanto <> é útil para combinar strings diretamente.
-
-Conclusão
-Este guia cobriu os fundamentos do Elixir, incluindo instalação, uso do IEx, tipos de dados básicos (inteiros, floats, booleanos, átomos e strings) e operações básicas (aritméticas, booleanas, de comparação, interpolação e concatenação). Com esses conceitos, você pode começar a explorar a programação em Elixir e construir aplicações mais complexas.
-
-[!NOTE]Para aprender mais, experimente criar pequenos programas no IEx e consulte a documentação oficial do Elixir ou continue explorando os recursos da Elixir School.
+> [!NOTE]
+> Para aprender mais, experimente criar pequenos programas no IEx e consulte a documentação oficial do Elixir ou continue explorando os recursos da Elixir School.
